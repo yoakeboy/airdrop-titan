@@ -4,7 +4,7 @@ wget -O titan.sh https://raw.githubusercontent.com/yoakeboy/titan/main/titan.sh 
 ```
 ## TITAN2
 ```bash
-wget -O titandua.sh https://raw.githubusercontent.com/yoakeboy/titan/main/titandua.sh && chmod +x titandua.sh && ./titandua.sh
+wget -O titandua.sh https://raw.githubusercontent.com/yoakeboy/airdrop-titan/main/titandua.sh && chmod +x titandua.sh && ./titandua.sh
 ```
 If running titandua.sh
 Type Port Number Example : 777 or 123 and Enter
