@@ -1,6 +1,8 @@
+###TITAN1
 ```bash
 wget -O titan.sh https://raw.githubusercontent.com/yoakeboy/titan/main/titan.sh && chmod +x titan.sh && ./titan.sh
 ```
+###TITAN2
 ```bash
 wget -O titandua.sh https://raw.githubusercontent.com/yoakeboy/titan/main/titandua.sh && chmod +x titandua.sh && ./titandua.sh
 ```
