@@ -40,7 +40,7 @@ else
 fi
 
 # Tarik gambar Docker
-docker pull nezha123/titan-edge:1.4
+docker pull nezha123/titan-edge
 
 # Buat sejumlah kontainer yang ditentukan pengguna
 for ((i=1; i<=container_count; i++))
