@@ -13,7 +13,7 @@ echo "======================Titan Node============================="
 # Set nilai default
 id="6D97139D-2FA4-41F1-A9F8-88324582A74E"
 container_count=5
-storage_gb=1000
+storage_gb=200
 custom_storage_path=""
 start_rpc_port=$((10000 + RANDOM % 10000))
 
