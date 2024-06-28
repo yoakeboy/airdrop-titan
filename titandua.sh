@@ -11,7 +11,7 @@ echo "Saya Hanya Translate Source @y95277777"
 echo "======================Titan Node============================="
 
 # Set nilai default
-id="6D97139D-2FA4-41F1-A9F8-88324582A74E"
+id="AD7AE63F-4EFB-4682-944C-B1ECDFB3CCB6"
 container_count=1
 storage_gb=200
 custom_storage_path=""
