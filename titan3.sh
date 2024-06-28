@@ -15,7 +15,12 @@ echo "=========================Titan Node================================"
 
 # Minta input dari pengguna
 read -p "Masukkan Code Identity Anda: " id
-read -p "Masukkan Size Disk GB (misalnya 100): " storage
+read -p "Masukkan Size Disk GB (default 100): " storage
+read -p "Masukkan Custom RPC Port (default 2345): " rpc_port
+
+# Set nilai default jika tidak ada input
+storage=${storage:-100}
+rpc_port=${rpc_port:-2345}
 
 printf "\033c"  # Membersihkan terminal
 
@@ -32,6 +37,15 @@ if ! command -v docker &> /dev/null; then
 else
     printf "\033c"  # Membersihkan terminal
     echo "Docker telah diinstal."
+fi
+
+# Centang jika tmux diinstal
+if ! command -v tmux &> /dev/null; then
+    echo "tmux tidak terdeteksi, menginstal..."
+    apt-get install tmux -y
+else
+    printf "\033c"  # Membersihkan terminal
+    echo "tmux telah diinstal."
 fi
 
 # Tarik gambar Docker
@@ -51,7 +65,7 @@ sleep 10
 
 # Ubah file config.toml untuk mengatur nilai StorageGB dan alamat listening
 docker exec $container_id titan-edge config set --storage-size "${storage}GB"
-docker exec $container_id titan-edge config set --listen-address 0.0.0.0:1234
+docker exec $container_id titan-edge config set --listen-address "0.0.0.0:${rpc_port}"
 
 # Masuk ke dalam container dan lakukan pengikatan Order
 docker run --rm -it -v ~/.titanedge:/root/.titanedge nezha123/titan-edge bind --hash=$id https://api-test1.container1.titannet.io/api/v2/device/binding
