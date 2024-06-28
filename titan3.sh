@@ -13,7 +13,7 @@ echo "======================Titan Node============================="
 
 # Minta input dari pengguna
 read -p "Masukkan Code Identity Anda: " id
-read -p "Masukkan Size Disk (misalnya 100GB): " storage
+read -p "Masukkan Size Disk GB (misalnya 100): " storage
 
 # Update paket repository
 apt update
