@@ -51,7 +51,7 @@ sleep 10
 
 # Ubah file config.toml untuk mengatur nilai StorageGB dan alamat listening
 docker exec $container_id titan-edge config set --storage-size "${storage}GB"
-docker exec $container_id titan-edge config set --listen-address 0.0.0.0:9000
+docker exec $container_id titan-edge config set --listen-address 0.0.0.0:1234
 
 # Masuk ke dalam container dan lakukan pengikatan Order
 docker run --rm -it -v ~/.titanedge:/root/.titanedge nezha123/titan-edge bind --hash=$id https://api-test1.container1.titannet.io/api/v2/device/binding
