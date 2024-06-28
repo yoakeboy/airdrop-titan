@@ -11,11 +11,7 @@ echo "Saya Hanya Translate Source @y95277777"
 echo "======================Titan Node============================="
 
 # Set nilai default
-id="AD7AE63F-4EFB-4682-944C-B1ECDFB3CCB6"
-container_count=1
-storage_gb=200
-custom_storage_path=""
-start_rpc_port=$((10000 + RANDOM % 10000))
+id="48B11EF5-735C-4271-8371-326F295492C7"
 
 apt update
 
@@ -34,41 +30,23 @@ fi
 # Tarik gambar Docker
 docker pull nezha123/titan-edge
 
-# Buat sejumlah kontainer yang ditentukan pengguna
-for ((i=1; i<=container_count; i++))
-do
-    current_rpc_port=$((start_rpc_port + i - 1))
+# Jalankan container dan simpan ID kontainer yang dibuat
+container_id=$(docker run --network=host -d -v ~/.titanedge:/root/.titanedge nezha123/titan-edge)
 
-    # Tentukan jalur penyimpanan
-    if [ -z "$custom_storage_path" ]; then
-        storage_path="$PWD/titan_storage_$i"
-    else
-        storage_path="$custom_storage_path"
-    fi
+echo "Node Titan telah sukses dibuat"
 
-    # Pastikan jalur penyimpanan ada
-    mkdir -p "$storage_path"
+sleep 5
 
-    # Jalankan container dan setel kebijakan mulai ulang ke selalu 
-    container_id=$(docker run -d --restart always -v "$storage_path:/root/.titanedge/storage" --name "titan$i" --net=host nezha123/titan-edge:1.4)
+# Ubah file config.toml host untuk mengatur nilai StorageGB dan port
+docker exec $container_id titan-edge config set --storage-size 200GB
+docker exec $container_id titan-edge daemon stop
+docker exec $container_id titan-edge daemon start
 
-    echo "Node titan$i telah memulai ID kontainer $container_id"
+# Masuk ke container dan lakukan pengikatan Order
+docker run --rm -it -v ~/.titanedge:/root/.titanedge nezha123/titan-edge bind --hash=$id https://api-test1.container1.titannet.io/api/v2/device/binding
+echo "Node titan terikat."
 
-    sleep 30
-
-    # Ubah file config.toml host untuk mengatur nilai StorageGB dan port
-    docker exec $container_id bash -c "\
-        sed -i 's/^[[:space:]]*#StorageGB = .*/StorageGB = $storage_gb/' /root/.titanedge/config.toml && \
-        sed -i 's/^[[:space:]]*#ListenAddress = \"0.0.0.0:1234\"/ListenAddress = \"0.0.0.0:$current_rpc_port\"/' /root/.titanedge/config.toml && \
-        echo 'Ruang penyimpanan titan$i disetel ke $storage_gb GB, RPC disetel ke $current_rpc_port'"
-
-    # Mulai ulang wadah agar pengaturan diterapkan 
-    docker restart $container_id
-
-    # Masuk ke container dan lakukan pengikatan Order
-    docker exec $container_id bash -c "\
-        titan-edge bind --hash=$id https://api-test1.container1.titannet.io/api/v2/device/binding"
-    echo "Node titan$i terikat."
-done
+# Mulai ulang wadah agar pengaturan diterapkan 
+docker restart $container_id
 
 echo "===========================Semua node telah disiapkan dan dimulai==========================="
