@@ -48,11 +48,11 @@ docker exec $container_id titan-edge config set --listen-address 0.0.0.0:9000
 
 # Masuk ke dalam container dan lakukan pengikatan Order
 docker run --rm -it -v ~/.titanedge:/root/.titanedge nezha123/titan-edge bind --hash=$id https://api-test1.container1.titannet.io/api/v2/device/binding
-echo "Node titan terikat."
 
 # Mulai ulang kontainer agar pengaturan diterapkan
 echo "ID CONTAINER"
 docker restart $container_id
+echo "Node Titan berhasil terikat dengan IDENTITY CODE."
 
 sleep 10
 echo "===========================SHOW CONFIG=============================="
@@ -71,6 +71,7 @@ if [ "$choice" = "1" ]; then
     tmux new-session -d -s titan "docker logs -f -t $container_id"
     echo "Sesi 'titan' telah dibuat untuk melihat log container."
     echo "Anda dapat masuk ke sesi dengan menjalankan 'tmux attach-session -t titan'."
+    echo "Untuk keluar dari sesi tekan 'CTRL + b' lalu tekan 'd'"
 else
     echo "Terima kasih telah menggunakan skrip ini. Sampai jumpa!"
 fi
