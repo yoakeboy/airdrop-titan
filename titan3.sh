@@ -43,7 +43,7 @@ echo "Node Titan telah sukses dibuat"
 sleep 10
 
 # Ubah file config.toml untuk mengatur nilai StorageGB dan alamat listening
-docker exec $container_id titan-edge config set --storage-size $storage GB
+docker exec $container_id titan-edge config set --storage-size "${storage}GB"
 docker exec $container_id titan-edge config set --listen-address 0.0.0.0:9000
 
 # Masuk ke dalam container dan lakukan pengikatan Order
@@ -52,10 +52,13 @@ echo "Node titan terikat."
 
 # Mulai ulang kontainer agar pengaturan diterapkan
 docker restart $container_id
-echo "===================================================================="
+echo "ID CONTAINER"
+sleep 10
+echo "===========================SHOW CONFIG=============================="
 docker exec $container_id titan-edge config show
-echo "===================================================================="
+sleep 10
+echo "=========================SHOW NODE INFO============================="
+echo "Tunggu"
 docker exec $container_id titan-edge info
-echo "===================================================================="
-
-echo "===========================NODE TELAH SUKSES BERJALAN==========================="
+sleep 5
+echo "====================NODE TELAH SUKSES BERJALAN======================"
