@@ -9,7 +9,7 @@ fi
 
 echo "Saya cuma modif source code"
 echo "Telegram @nugz5"
-echo "======================Titan Node============================="
+echo "=========================Titan Node================================"
 
 # Minta input dari pengguna
 read -p "Masukkan Code Identity Anda: " id
@@ -51,14 +51,26 @@ docker run --rm -it -v ~/.titanedge:/root/.titanedge nezha123/titan-edge bind --
 echo "Node titan terikat."
 
 # Mulai ulang kontainer agar pengaturan diterapkan
-docker restart $container_id
 echo "ID CONTAINER"
+docker restart $container_id
+
 sleep 10
 echo "===========================SHOW CONFIG=============================="
 docker exec $container_id titan-edge config show
 sleep 10
 echo "=========================SHOW NODE INFO============================="
-echo "Tunggu"
 docker exec $container_id titan-edge info
 sleep 5
 echo "====================NODE TELAH SUKSES BERJALAN======================"
+
+# Menambahkan pilihan untuk melihat log atau keluar dari skrip
+read -p "Apakah Anda ingin melihat log container? (ketik '1' untuk melihat log, atau tekan enter untuk keluar): " choice
+
+if [ "$choice" = "1" ]; then
+    # Membuat session tmux dengan nama "titan" dan menjalankan perintah untuk melihat log
+    tmux new-session -d -s titan "docker logs -f -t $container_id"
+    echo "Sesi 'titan' telah dibuat untuk melihat log container."
+    echo "Anda dapat masuk ke sesi dengan menjalankan 'tmux attach-session -t titan'."
+else
+    echo "Terima kasih telah menggunakan skrip ini. Sampai jumpa!"
+fi
