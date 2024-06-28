@@ -29,24 +29,22 @@ fi
 
 # Tarik gambar Docker
 docker pull nezha123/titan-edge
-
+mkdir ~/.titanedge
 # Jalankan container dan simpan ID kontainer yang dibuat
 container_id=$(docker run --network=host -d -v ~/.titanedge:/root/.titanedge nezha123/titan-edge)
-
 echo "Node Titan telah sukses dibuat"
 
-sleep 5
+sleep 10
 
 # Ubah file config.toml host untuk mengatur nilai StorageGB dan port
 docker exec $container_id titan-edge config set --storage-size 200GB
-docker exec $container_id titan-edge daemon stop
-docker exec $container_id titan-edge daemon start
+docker exec $container_id titan-edge config set --listen-address 0.0.0.0:9000
 
 # Masuk ke container dan lakukan pengikatan Order
 docker run --rm -it -v ~/.titanedge:/root/.titanedge nezha123/titan-edge bind --hash=$id https://api-test1.container1.titannet.io/api/v2/device/binding
-echo "Node titan terikat."
 
 # Mulai ulang wadah agar pengaturan diterapkan 
 docker restart $container_id
+echo "Node titan terikat."
 
 echo "===========================Semua node telah disiapkan dan dimulai==========================="
