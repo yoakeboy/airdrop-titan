@@ -13,7 +13,7 @@ echo "======================Titan Node============================="
 
 # Minta input dari pengguna
 read -p "Masukkan Code Identity Anda: " id
-read -p "Masukkan Size Disk (misalnya 200GB): " storage_gb
+read -p "Masukkan Size Disk (misalnya 100GB): " storage
 
 # Update paket repository
 apt update
@@ -43,7 +43,7 @@ echo "Node Titan telah sukses dibuat"
 sleep 10
 
 # Ubah file config.toml untuk mengatur nilai StorageGB dan alamat listening
-docker exec $container_id titan-edge config set --storage-size $storage_gb
+docker exec $container_id titan-edge config set --storage-size $storage GB
 docker exec $container_id titan-edge config set --listen-address 0.0.0.0:9000
 
 # Masuk ke dalam container dan lakukan pengikatan Order
@@ -52,6 +52,10 @@ echo "Node titan terikat."
 
 # Mulai ulang kontainer agar pengaturan diterapkan
 docker restart $container_id
-echo "Kontainer telah berhasil direstart."
+echo "===================================================================="
+docker exec $container_id titan-edge config show
+echo "===================================================================="
+docker exec $container_id titan-edge info
+echo "===================================================================="
 
-echo "===========================Semua node telah disiapkan dan dimulai==========================="
+echo "===========================NODE TELAH SUKSES BERJALAN==========================="
