@@ -7,12 +7,13 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
-echo "Saaya cuma modif source code"
+echo "Saya cuma modif source code"
+echo "Telegram @nugz5"
 echo "======================Titan Node============================="
 
 # Minta input dari pengguna
 read -p "Masukkan Code Identity Anda: " id
-read -p "Masukkan jumlah disk (misalnya 200GB): " storage_gb
+read -p "Masukkan Size Disk (misalnya 200GB): " storage_gb
 
 # Update paket repository
 apt update
