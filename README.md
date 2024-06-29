@@ -16,3 +16,5 @@ Don't forget to input your code identity and size disk
 Example  
 Masukkan Code Identity Anda: 48B11EF5-735C-4471-8371-326F24C494C7  
 Masukkan Size Disk GB (misalnya 100): 200
+
+Tested on VPS UBUNTU 22+ Virtualization KVM
