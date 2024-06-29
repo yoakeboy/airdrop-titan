@@ -16,11 +16,11 @@ echo "=========================Titan Node================================"
 # Minta input dari pengguna
 read -p "Masukkan Code Identity Anda: " id
 read -p "Masukkan Size Disk GB (default 100): " storage
-read -p "Masukkan Custom RPC Port (default 2345): " rpc_port
+read -p "Masukkan Custom RPC Port (default 3456): " rpc_port
 
 # Set nilai default jika tidak ada input
 storage=${storage:-100}
-rpc_port=${rpc_port:-2345}
+rpc_port=${rpc_port:-3456}
 
 printf "\033c"  # Membersihkan terminal
 
