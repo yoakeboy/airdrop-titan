@@ -55,7 +55,7 @@ docker pull nezha123/titan-edge
 mkdir -p ~/.titanedge
 
 # Jalankan container dan simpan ID kontainer yang dibuat
-container_id=$(docker run --network=host -d -v ~/.titanedge:/root/.titanedge nezha123/titan-edge)
+container_id=$(docker run --network=host -d --restart unless-stopped -v ~/.titanedge:/root/.titanedge nezha123/titan-edge)
 
 printf "\033c"  # Membersihkan terminal
 echo "Node Titan telah sukses dibuat"
@@ -106,3 +106,22 @@ else
     printf "\033c"  # Membersihkan terminal
     echo "Terima kasih telah menggunakan skrip ini. Sampai jumpa!"
 fi
+
+# Menambahkan container ke startup systemd
+cat <<EOF >/etc/systemd/system/titan-edge.service
+[Unit]
+Description=Titan Edge Docker Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a $container_id
+ExecStop=/usr/bin/docker stop -t 2 $container_id
+
+[Install]
+WantedBy=default.target
+EOF
+
+systemctl enable titan-edge.service
+systemctl start titan-edge.service
