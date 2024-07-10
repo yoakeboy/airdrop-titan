@@ -16,11 +16,24 @@ echo "=========================Titan Node================================"
 # Minta input dari pengguna
 read -p "Masukkan Code Identity Anda: " id
 read -p "Masukkan Size Disk GB (default 100): " storage
-read -p "Masukkan Custom RPC Port (default 3456): " rpc_port
+read -p "Masukkan Custom RPC Port (default random): " rpc_port
 
 # Set nilai default jika tidak ada input
 storage=${storage:-100}
-rpc_port=${rpc_port:-3456}
+
+# Fungsi untuk mencari port bebas
+function get_random_port {
+    while true; do
+        port=$((RANDOM % 65535 + 1))
+        if ! sudo lsof -i:$port > /dev/null; then
+            echo $port
+            break
+        fi
+    done
+}
+
+# Set rpc_port ke nilai acak jika tidak ada input
+rpc_port=${rpc_port:-$(get_random_port)}
 
 printf "\033c"  # Membersihkan terminal
 
